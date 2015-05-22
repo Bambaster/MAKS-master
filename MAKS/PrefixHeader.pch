@@ -1,0 +1,36 @@
+//
+//  PrefixHeader.pch
+//  MAKS
+//
+//  Created by Lowtrack on 13.05.15.
+//  Copyright (c) 2015 Vladimir Popov. All rights reserved.
+//
+
+#ifndef MAKS_PrefixHeader_pch
+#define MAKS_PrefixHeader_pch
+
+
+#import <Availability.h>
+#import "AppConstans.h"
+#import "API.h"
+#import "UIColor+HexColor.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+
+//#import "PureLayout.h"
+#import <AFNetworking/AFNetworking.h>
+//#import <CommonCrypto/CommonDigest.h>
+
+
+#import "UIColor+HexColor.h"
+#import "NSMutableAttributedString+ChangeSpaceBetweenCharacters.h"
+#import "UIImage+Blured_And_SnapShot_Image.h"
+
+#import "NSDictionary+DictFrom_JSON_File.h"
+#import "Animations.h"
+
+#endif

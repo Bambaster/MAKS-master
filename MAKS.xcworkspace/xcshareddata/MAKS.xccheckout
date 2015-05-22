@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1A1FEA97-B0D2-4282-AF04-4D973D70F537</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MAKS</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>07D1A107DC0BB204503AC99A515A52D499438C41</key>
+		<string>https://github.com/Bambaster/MAKS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MAKS.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>07D1A107DC0BB204503AC99A515A52D499438C41</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Bambaster/MAKS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>07D1A107DC0BB204503AC99A515A52D499438C41</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>07D1A107DC0BB204503AC99A515A52D499438C41</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MAKS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
