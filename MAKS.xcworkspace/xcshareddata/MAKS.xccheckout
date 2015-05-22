@@ -12,20 +12,24 @@
 	<dict>
 		<key>07D1A107DC0BB204503AC99A515A52D499438C41</key>
 		<string>https://github.com/Bambaster/MAKS.git</string>
+		<key>995BDDEE2E9EB1458BBED90EB8756C8A88C57420</key>
+		<string>https://github.com/Bambaster/MAKS-master.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MAKS.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>07D1A107DC0BB204503AC99A515A52D499438C41</key>
+		<string>../../MAKS</string>
+		<key>995BDDEE2E9EB1458BBED90EB8756C8A88C57420</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Bambaster/MAKS.git</string>
+	<string>https://github.com/Bambaster/MAKS-master.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>07D1A107DC0BB204503AC99A515A52D499438C41</string>
+	<string>995BDDEE2E9EB1458BBED90EB8756C8A88C57420</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>07D1A107DC0BB204503AC99A515A52D499438C41</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MAKS</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>995BDDEE2E9EB1458BBED90EB8756C8A88C57420</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MAKS-master</string>
 		</dict>
 	</array>
 </dict>

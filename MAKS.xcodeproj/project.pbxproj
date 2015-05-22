@@ -704,7 +704,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/Vladimir Popov/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/admin/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
 				INFOPLIST_FILE = MAKS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -719,7 +719,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/Vladimir Popov/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/admin/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
 				INFOPLIST_FILE = MAKS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

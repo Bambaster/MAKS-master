@@ -12,13 +12,18 @@
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@interface MapViewController () <CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, MBXRasterTileOverlayDelegate, UIGestureRecognizerDelegate>
+@interface MapViewController () <CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, MBXRasterTileOverlayDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic) MBXRasterTileOverlay *rasterOverlay;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray * arrayPlan;
+@property (strong, nonatomic) NSArray * array_SearchResults;
+@property (strong, nonatomic) NSArray * array_Additional;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *view_TableView;
 
+@property (weak, nonatomic) IBOutlet UIView *view_MapView;
 
 
 @end
@@ -42,9 +47,9 @@
     self.rasterOverlay.canReplaceMapContent = YES;
     [self.mapView addOverlay:self.rasterOverlay];
 
-    self.arrayPlan = [[NSMutableArray alloc]init];
-    self.arrayPlan = [PlanCoordinates arrayPlanCoordinates];
-  //  [self annotation_Plan];
+    self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
+    self.array_SearchResults = self.array_Additional;
+    [self annotation_Plan];
    
 
 }
@@ -55,6 +60,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 
 #pragma mark - MKMapViewDelegate protocol implementation
 
@@ -78,7 +85,7 @@
 - (void) setupMapView: (CLLocationCoordinate2D) coord {
     
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 900, 900);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 700, 700);
     [self.mapView setRegion:region animated:YES];
 }
 
@@ -91,8 +98,6 @@
         annView.canShowCallout = NO;
         annView.image = [UIImage imageNamed:@"MapPoint.png"];
         
-        [annView addSubview:[self getCalloutView:annotation.title]]; //вызываем метод, который подписывает адрес над маркером
-        
         return annView;
         
     }
@@ -101,56 +106,23 @@
     return nil;
 }
 
-//--------------------------------------------------------------------------------------------------------------------------
 
-- (UIView*) getCalloutView: (NSString*) title { // метод, который подписывает данные над маркером
-    
-    //создаем вью для вывода адреса:
-    UIView * callView = [[UIView alloc]initWithFrame:CGRectMake(-60, -50, 150, 50)];
-    callView.backgroundColor = [UIColor whiteColor];
-    callView.layer.borderWidth = 1.0;
-    callView.layer.cornerRadius = 7.0;
-    
-    
-    callView.tag = 1000;
-    callView.alpha = 0; //делаем прозрачной вью с адресом, чтобы не высвечивалось на карте при установке маркеров
-    
-    //создаем лейбл для вывода адреса
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 150, 50)];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping; // перенос по словам
-    label.textAlignment = NSTextAlignmentCenter; //выравнивание по центру
-    label.textColor = [UIColor blackColor];
-    label.text = title;
-    label.font = [UIFont fontWithName: @"Arial" size: 10.0];
-    
-    [callView addSubview:label];
-    
-    return callView;
-    
-    
-}
 
 //--------------------------------------------------------------------------------------------------------------------------
 
 - (void) annotation_Plan {
    //по координатам из массива устанавливаем аннотации
     //позже в этот метод по ключам добавить картинки соответвтующих объектов
-    for (int i = 0; i < self.arrayPlan.count; i++) {
-        NSDictionary * dict = [self.arrayPlan objectAtIndex:i];
+    for (int i = 0; i < self.array_SearchResults.count; i++) {
+        NSDictionary * dict = [self.array_SearchResults objectAtIndex:i];
         CLLocation * newLocation = [[CLLocation alloc] init];
         newLocation = [dict objectForKey:@"coord"];
         
         CLGeocoder * geocoder = [[CLGeocoder alloc]init];
         [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-            //CLPlacemark * place = [placemarks objectAtIndex:0];
-            
-            NSString * stringAnnotation = [[NSString alloc] initWithFormat:@"%@\n%@", [dict valueForKey:@"value"], [dict valueForKey:@"descript"]];
-            
+
             MKPointAnnotation * annotation = [[MKPointAnnotation alloc]init];
-            annotation.title = stringAnnotation;
             annotation.coordinate = newLocation.coordinate;
-            
             
             [self.mapView addAnnotation:annotation]; //добавляем на карту аннотацию
         }];
@@ -159,30 +131,6 @@
 }
 
 //--------------------------------------------------------------------------------------------------------------------------
-
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    //данный метод делает видимой вью с адресом при нажатии на маркер
-    if (![view.annotation isKindOfClass:MKUserLocation.class]) {
-        for (UIView * subView in view.subviews) {
-            if (subView.tag == 1000) {
-                subView.alpha = 1;
-            }
-        }
-    }
-    
-}
-
-
-- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
-    //данный метод делает невидимой вью с адресом при нажатии на другой элемент
-    for (UIView * subView in view.subviews) {
-        if (subView.tag == 1000) {
-            subView.alpha = 0;
-        }
-    }
-    
-}
-
 //--------------------------------------------------------------------------------------------------------------------------
 
 
@@ -202,13 +150,14 @@
     }
     
 }
-
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return self.arrayPlan.count;
+    return self.array_SearchResults.count;
 }
 
 
@@ -218,12 +167,12 @@
     static NSString * simpleTaibleIndefir = @"CellMap";
     CustomTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:simpleTaibleIndefir];
     
-    cell.label_Value.text = [[self.arrayPlan objectAtIndex:indexPath.row]objectForKey:@"value"];
-    cell.label_Descript.text = [[self.arrayPlan objectAtIndex:indexPath.row]objectForKey:@"descript"];
+    cell.label_Value.text = [[self.array_SearchResults objectAtIndex:indexPath.row]objectForKey:@"value"];
+    cell.label_Descript.text = [[self.array_SearchResults objectAtIndex:indexPath.row]objectForKey:@"descript"];
     
     
     //высчитываем координаты между пользователем и объектом и выводим их в label_Distance:
-    NSDictionary * dict = [self.arrayPlan objectAtIndex:indexPath.row];
+    NSDictionary * dict = [self.array_SearchResults objectAtIndex:indexPath.row];
     CLLocation * newLocation = [[CLLocation alloc] init];
     newLocation = [dict objectForKey:@"coord"];
     CLLocation * locationManager = self.locationManager.location;
@@ -236,17 +185,21 @@
     
 }
 
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 
-#pragma mark UITableViewDelegate
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self removeAllAnnotations];
+    [self annotation_Plan];
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     //по индексу ячейки находим координаты в массиве self.arrayPlan и устанавливаем данные координаты по центру карты
-    NSDictionary * dict = [self.arrayPlan objectAtIndex:indexPath.row];
+    NSDictionary * dict = [self.array_SearchResults objectAtIndex:indexPath.row];
     CLLocation * newLocation = [[CLLocation alloc] init];
     newLocation = [dict objectForKey:@"coord"];
     [self setupMapView:newLocation.coordinate];
@@ -254,14 +207,9 @@
     //по полученным координатам устанавливаем аннотацию:
     CLGeocoder * geocoder = [[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark * place = [placemarks objectAtIndex:0];
-        //записываем адрес с индексом в NSString
-        NSString * stringAnnotation = [[NSString alloc] initWithFormat:@"%@\n%@", [place.addressDictionary valueForKey:@"value"], [place.addressDictionary valueForKey:@"descript"]];
         
         MKPointAnnotation * annotation = [[MKPointAnnotation alloc]init];
-        annotation.title = stringAnnotation;
         annotation.coordinate = newLocation.coordinate;
-        
         
         [self.mapView addAnnotation:annotation]; //добавляем на карту аннотацию
         
@@ -280,6 +228,51 @@
     [self.mapView removeAnnotations:annotations];
     
 }
+
+//--------------------------------------------------------------------------------------------------------------------------
+//метод, который перезагружает таблицу:
+- (void) reload_TableView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];});
+}
+
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    NSPredicate *resultPredicate = [NSPredicate
+                                    predicateWithFormat:@"value contains[cd] %@",
+                                    searchText];
+    
+    self.array_SearchResults = [self.array_Additional filteredArrayUsingPredicate:resultPredicate];
+
+    
+    [self reload_TableView];
+    
+}
+
+//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+//    //код когда начинаем поиск (выезд вью таблицы и карты)
+//}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    //действие при нажатии на Поиск:
+    [searchBar resignFirstResponder]; 
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    //действие при нажатии на Cancel:
+    [searchBar resignFirstResponder];
+    self.array_SearchResults = self.array_Additional;
+    [self reload_TableView];
+    
+}
+
+
+
 
 
 
