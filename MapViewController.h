@@ -13,7 +13,12 @@
 
 
 
-@interface MapViewController : UIViewController 
+@interface MapViewController : UIViewController <UITextFieldDelegate> {
+    
+    BOOL isUsersViewHiden;
+    BOOL isSearchBarActive;
+
+}
 
 
 
