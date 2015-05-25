@@ -29,10 +29,10 @@
     CLLocation * coordParking1 = [[CLLocation alloc]initWithLatitude:55.56647409630745 longitude:38.13307285308838];
     CLLocation * coordParking2East = [[CLLocation alloc]initWithLatitude:55.568934032573395 longitude:38.14137428998947];
     CLLocation * coordParking2West = [[CLLocation alloc] initWithLatitude:55.568934032573395 longitude:38.13571214675903];
-    CLLocation * coordParking3 = [[CLLocation alloc]initWithLatitude:55.56762067023417 longitude:38.15358638763428];
-    CLLocation * coordParking4 = [[CLLocation alloc]initWithLatitude:55.56762067023417 longitude:38.15847873687744];
-    CLLocation * coordParking6 = [[CLLocation alloc]initWithLatitude:55.56519401920977 longitude:38.121700286865234];
-    CLLocation * coordParking7 = [[CLLocation alloc]initWithLatitude:55.57052487109443 longitude: 38.13045769929886];
+    CLLocation * coordParking3 = [[CLLocation alloc]initWithLatitude:55.56796038941467 longitude:38.15328598022461];
+    CLLocation * coordParking4 = [[CLLocation alloc]initWithLatitude:55.56796038941467 longitude:38.16332817077637];
+    CLLocation * coordParking6 = [[CLLocation alloc]initWithLatitude:55.56334966416863 longitude:38.12152862548828];
+    CLLocation * coordParking7 = [[CLLocation alloc]initWithLatitude:55.57130889268606 longitude: 38.1251335144043];
     
     
     // медпомощь:
@@ -75,6 +75,9 @@
     //Приорити зона:
     CLLocation * coordPriorityZone = [[CLLocation alloc]initWithLatitude:55.561335335397494 longitude:38.14311504364014];
     
+    
+   
+    
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects:
                             coordParking, coordParking1, coordParking2East, coordParking2West, coordParking3, coordParking4, coordParking6, coordParking7,
                             coordClinic, coordEmercom, coordPolice, coordCongressCenter, coordPressCenter, coordManagmentOffice,
@@ -89,7 +92,7 @@
         
         [dict setObject:[arrayValue objectAtIndex:i] forKey:@"value"];
         [dict setObject:[arrayDescript objectAtIndex:i] forKey:@"descript"];
-        [dict setObject:[arrayKey objectAtIndex:i] forKey:@"key"];
+        [dict setObject:[arrayKey objectAtIndex:i] forKey:@"annotation"];
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         
         [arrayPlanCoord addObject:dict];

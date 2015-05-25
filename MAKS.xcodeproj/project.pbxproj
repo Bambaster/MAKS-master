@@ -12,6 +12,9 @@
 		849C456C1B0B483600FE261B /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C456B1B0B483600FE261B /* CustomTableViewCell.m */; };
 		849C456F1B0B726700FE261B /* MapPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 849C456D1B0B726700FE261B /* MapPoint.png */; };
 		849C45701B0B726700FE261B /* MapPoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849C456E1B0B726700FE261B /* MapPoint@2x.png */; };
+		84A2EEA21B13419F004BC66A /* RoadByTrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A2EEA11B13419F004BC66A /* RoadByTrain.m */; };
+		84A2EEA51B135B5C004BC66A /* RoadBusFromZhukovsky.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A2EEA41B135B5C004BC66A /* RoadBusFromZhukovsky.m */; };
+		84A2EEA81B136919004BC66A /* RoadAuto.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A2EEA71B136919004BC66A /* RoadAuto.m */; };
 		E74F667C1B10ACEC0094F366 /* MoreChoosen.png in Resources */ = {isa = PBXBuildFile; fileRef = E74F66781B10ACEC0094F366 /* MoreChoosen.png */; };
 		E74F667D1B10ACEC0094F366 /* MoreChoosen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E74F66791B10ACEC0094F366 /* MoreChoosen@2x.png */; };
 		E74F667E1B10ACEC0094F366 /* MoreUnchoosen.png in Resources */ = {isa = PBXBuildFile; fileRef = E74F667A1B10ACEC0094F366 /* MoreUnchoosen.png */; };
@@ -81,6 +84,12 @@
 		849C456B1B0B483600FE261B /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		849C456D1B0B726700FE261B /* MapPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MapPoint.png; sourceTree = "<group>"; };
 		849C456E1B0B726700FE261B /* MapPoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MapPoint@2x.png"; sourceTree = "<group>"; };
+		84A2EEA01B13419F004BC66A /* RoadByTrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoadByTrain.h; sourceTree = "<group>"; };
+		84A2EEA11B13419F004BC66A /* RoadByTrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoadByTrain.m; sourceTree = "<group>"; };
+		84A2EEA31B135B5C004BC66A /* RoadBusFromZhukovsky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoadBusFromZhukovsky.h; sourceTree = "<group>"; };
+		84A2EEA41B135B5C004BC66A /* RoadBusFromZhukovsky.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoadBusFromZhukovsky.m; sourceTree = "<group>"; };
+		84A2EEA61B136919004BC66A /* RoadAuto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoadAuto.h; sourceTree = "<group>"; };
+		84A2EEA71B136919004BC66A /* RoadAuto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoadAuto.m; sourceTree = "<group>"; };
 		BB149093AB9D2882423F4107 /* Pods-MAKS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAKS.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAKS/Pods-MAKS.release.xcconfig"; sourceTree = "<group>"; };
 		C517A846859D0076EBFF8E88 /* libPods-MAKS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAKS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E74F66781B10ACEC0094F366 /* MoreChoosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreChoosen.png; sourceTree = "<group>"; };
@@ -411,6 +420,12 @@
 				849C456E1B0B726700FE261B /* MapPoint@2x.png */,
 				E7A418C11B0A4EFF006CAEA3 /* MapViewController.h */,
 				E7A418C21B0A4EFF006CAEA3 /* MapViewController.m */,
+				84A2EEA61B136919004BC66A /* RoadAuto.h */,
+				84A2EEA71B136919004BC66A /* RoadAuto.m */,
+				84A2EEA31B135B5C004BC66A /* RoadBusFromZhukovsky.h */,
+				84A2EEA41B135B5C004BC66A /* RoadBusFromZhukovsky.m */,
+				84A2EEA01B13419F004BC66A /* RoadByTrain.h */,
+				84A2EEA11B13419F004BC66A /* RoadByTrain.m */,
 				849C456A1B0B483600FE261B /* CustomTableViewCell.h */,
 				849C456B1B0B483600FE261B /* CustomTableViewCell.m */,
 				849C45671B0B41C600FE261B /* PlanCoordinates.h */,
@@ -583,8 +598,11 @@
 				E7878ADF1B0E3D6600017378 /* NSNotificationCenter+Notifications.m in Sources */,
 				E784545A1B03991400419725 /* UIColor+HexColor.m in Sources */,
 				E78454391B038B9B00419725 /* ViewController.m in Sources */,
+				84A2EEA81B136919004BC66A /* RoadAuto.m in Sources */,
 				E7878ADD1B0E3D6600017378 /* UIImage+Blured_And_SnapShot_Image.m in Sources */,
+				84A2EEA21B13419F004BC66A /* RoadByTrain.m in Sources */,
 				E7878AE41B0E3DF700017378 /* MainViewViewController.m in Sources */,
+				84A2EEA51B135B5C004BC66A /* RoadBusFromZhukovsky.m in Sources */,
 				E7878AED1B0E3E3E00017378 /* UIView+MotionBlur.m in Sources */,
 				849C45691B0B41C600FE261B /* PlanCoordinates.m in Sources */,
 				E78454301B038B9B00419725 /* main.m in Sources */,
@@ -728,7 +746,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/Vladimir Popov/Documents/MAKS-master/MAKS/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/admin/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
 				INFOPLIST_FILE = MAKS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -743,7 +761,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/Vladimir Popov/Documents/MAKS-master/MAKS/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/admin/Desktop/MAKS-master/MAKS/PrefixHeader.pch";
 				INFOPLIST_FILE = MAKS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

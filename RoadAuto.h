@@ -1,0 +1,19 @@
+//
+//  RoadAuto.h
+//  MAKS
+//
+//  Created by Admin on 25.05.15.
+//  Copyright (c) 2015 Vladimir Popov. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
+
+@interface RoadAuto : NSObject
+
++ (NSMutableArray *) array_Novoryazan;
++ (NSMutableArray *) array_Egoryevskoe;
+
+
+@end

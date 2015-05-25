@@ -11,6 +11,10 @@
 #import "CustomTableViewCell.h"
 #import "UIView+MotionBlur.h"
 #import "UIScrollView+AH3DPullRefresh.h"
+#import "RoadByTrain.h"
+#import "RoadBusFromZhukovsky.h"
+#import "RoadAuto.h"
+
 
 typedef void (^NextPointBlock) (void);
 
@@ -27,7 +31,6 @@ typedef void (^NextPointBlock) (void);
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *view_TableView;
-
 @property (weak, nonatomic) IBOutlet UIView *view_MapView;
 
 @property (weak, nonatomic) IBOutlet UIButton *button_Menu_UP_Down;
@@ -97,7 +100,7 @@ typedef void (^NextPointBlock) (void);
 
         self.view_PointsMenu.alpha = 0;
         isCurrentLocation = YES;
-        self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
+        self.array_Additional = [RoadByTrain array_RoadTrainVacation];
         self.array_SearchResults = self.array_Additional;
         [self setPointForNavigation];
         
@@ -170,14 +173,51 @@ typedef void (^NextPointBlock) (void);
         
         MKAnnotationView*annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Annotation"];
         annView.canShowCallout = NO;
-        annView.image = [UIImage imageNamed:@"MapPoint.png"];
         
+        
+        if (!self.isNavigationMode) {
+        annView.image = [UIImage imageNamed:@"MapPoint.png"];
+        }
+        
+        else {
+        annView.image = [UIImage imageNamed:@"MapPoint.png"]; //поставить другую картинку?
+        [annView addSubview:[self get_CalloutView:annotation.title]];
+        
+        }
         return annView;
         
     }
     
     
     return nil;
+}
+
+- (UIView*) get_CalloutView: (NSString*)title { // метод, который подписывает данные над маркером
+    
+    //создаем вью для вывода адреса:
+    UIView * callView = [[UIView alloc]initWithFrame:CGRectMake(-100, -70, 200, 70)];
+    callView.backgroundColor = [UIColor yellowColor];
+    callView.layer.borderWidth = 1.0;
+    callView.layer.cornerRadius = 7.0;
+    
+    
+    callView.tag = 1000;
+    callView.alpha = 1;
+    
+    //создаем лейбл для вывода адреса
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 200, 70)];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByWordWrapping; // перенос по словам
+    label.textAlignment = NSTextAlignmentCenter; //выравнивание по центру
+    label.textColor = [UIColor blackColor];
+    label.text = title;
+    label.font = [UIFont fontWithName: @"Arial" size: 10.0];
+    
+    [callView addSubview:label];
+    
+    return callView;
+    
+    
 }
 
 
@@ -202,6 +242,24 @@ typedef void (^NextPointBlock) (void);
         }];
     }
 
+}
+
+- (void) annotation_Navigation: (CLLocation*)newLocation Index:(NSInteger)index {
+
+        CLGeocoder * geocoder = [[CLGeocoder alloc]init];
+        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+
+            //записываем адрес с индексом в NSString
+            NSString * newString = [[self.array_SearchResults objectAtIndex:index] objectForKey:@"annotation"];
+            
+            MKPointAnnotation * annotation = [[MKPointAnnotation alloc]init];
+            annotation.title = newString;
+            annotation.coordinate = newLocation.coordinate;
+            
+            [self.mapView addAnnotation:annotation]; //добавляем на карту аннотацию
+            
+        }];
+    
 }
 
 //--------------------------------------------------------------------------------------------------------------------------
@@ -663,21 +721,27 @@ typedef void (^NextPointBlock) (void);
         NSDictionary * dict = [arrayPoints objectAtIndex:index];
         CLLocation * newLocation = [[CLLocation alloc] init];
         newLocation = [dict objectForKey:@"coord"];
+        [weakSelf annotation_Navigation:newLocation Index:index];
+        
+        
+        
         
         if (dist1 != 500) {
             dist1 = 500;
             dist2 = 500;
             [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
-            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:5.0];
+            
 
         }
         
         else {
             
-            dist1 = 5500;
-            dist2 = 5500;
+            dist1 = 6500;
+            dist2 = 6500;
             [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
-            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];            index ++;
+            
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:5.0];            index ++;
         }
         
         
