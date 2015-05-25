@@ -12,9 +12,12 @@
 #import "UIView+MotionBlur.h"
 #import "UIScrollView+AH3DPullRefresh.h"
 
+typedef void (^NextPointBlock) (void);
+
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 @interface MapViewController () <CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, MBXRasterTileOverlayDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate>
+@property (strong, nonatomic) NextPointBlock nextPointBlock;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic) MBXRasterTileOverlay *rasterOverlay;
@@ -44,37 +47,62 @@
     self.navigationController.navigationBar.hidden = YES;
     isUsersViewHiden = NO;
     isSearchBarActive = NO;
-    [self.tableView setPullToRefreshHandler:^{
-        
-        [self refreshTableView];
-        
-    }];
-
-
-    self.tableView.tableFooterView = [[UIView alloc] init];
-
-    UITextField *textField = [self.searchBar valueForKey:@"_searchField"];
-    textField.clearButtonMode = UITextFieldViewModeNever;
-    
-    [self.button_Menu_UP_Down addTarget:self action:@selector(menuActions:) forControlEvents:UIControlEventTouchUpInside];
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager setDelegate:self];
     [self.locationManager startUpdatingLocation];
     [self.locationManager requestAlwaysAuthorization];
-    
 
+    
     [MBXMapKit setAccessToken:MAPBOX_API_KEY];
     self.rasterOverlay = [[MBXRasterTileOverlay alloc] initWithMapID:MAPBOX_STYLE];
     self.rasterOverlay.delegate = self;
     self.rasterOverlay.canReplaceMapContent = YES;
     [self.mapView addOverlay:self.rasterOverlay];
+    
+    [self setupView];
 
-    self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
-    self.array_SearchResults = self.array_Additional;
-    [self annotation_Plan];
+
     
    
 
+}
+
+- (void) setupView {
+    //настраиваем вид если не навигация
+    
+    if (!self.isNavigationMode) {
+        
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    UITextField *textField = [self.searchBar valueForKey:@"_searchField"];
+    textField.clearButtonMode = UITextFieldViewModeNever;
+    [self.button_Menu_UP_Down addTarget:self action:@selector(menuActions:) forControlEvents:UIControlEventTouchUpInside];
+    self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
+    self.array_SearchResults = self.array_Additional;
+    [self annotation_Plan];
+    [self.tableView setPullToRefreshHandler:^{
+        
+        [self refreshTableView];
+        
+    }];
+         }
+    
+    
+    else  {
+        
+        //настраиваем вид если навигация, tableView нам не нужен и фикс геолокации
+
+        CGRect newMapFrame = [self.mapView frame];
+        newMapFrame.origin.y = 0;
+        self.mapView.frame = newMapFrame;
+
+        self.view_PointsMenu.alpha = 0;
+        isCurrentLocation = YES;
+        self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
+        self.array_SearchResults = self.array_Additional;
+        [self setPointForNavigation];
+        
+        
+    }
 }
 
 
@@ -605,6 +633,67 @@
     });
 
 }
+
+
+
+#pragma mark - Navigation
+
+
+- (void) showPointNavigation: (CLLocationCoordinate2D) coord Dist:(NSUInteger) latitudinalMeters  Dist2:(NSUInteger) longitudinalMeters{
+    
+    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, latitudinalMeters, longitudinalMeters);
+    [self.mapView setRegion:region animated:YES];
+    
+    
+}
+
+
+- (void) setPointForNavigation {
+    
+    __block NSUInteger index = 0;
+    __block NSUInteger dist1 = 0;
+    __block NSUInteger dist2 = 0;
+
+    MapViewController * __weak weakSelf = self;
+    
+    NSArray * arrayPoints = self.array_SearchResults;
+    self.nextPointBlock = ^ (void) {
+        
+        NSDictionary * dict = [arrayPoints objectAtIndex:index];
+        CLLocation * newLocation = [[CLLocation alloc] init];
+        newLocation = [dict objectForKey:@"coord"];
+        
+        if (dist1 != 500) {
+            dist1 = 500;
+            dist2 = 500;
+            [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];
+
+        }
+        
+        else {
+            
+            dist1 = 5500;
+            dist2 = 5500;
+            [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];            index ++;
+        }
+        
+        
+    };
+    
+    
+    [self addPoint];
+
+}
+
+- (void) addPoint {
+    
+    self.nextPointBlock ();
+
+}
+
 
 
 

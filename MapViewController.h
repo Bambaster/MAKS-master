@@ -20,6 +20,6 @@
 
 }
 
-
+@property (nonatomic, assign) BOOL isNavigationMode;
 
 @end

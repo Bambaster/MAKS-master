@@ -7,6 +7,7 @@
 //
 
 #import "RightMenuViewController.h"
+#import "MapViewController.h"
 
 @interface RightMenuViewController ()
 
@@ -15,6 +16,9 @@
 - (IBAction)mapScreen_Action:(id)sender;
 
 - (IBAction)newsScreen_Action:(id)sender;
+
+- (IBAction)navigation:(id)sender;
+
 
 @end
 
@@ -42,8 +46,10 @@
 
 - (IBAction)mapScreen_Action:(id)sender {
     
-    [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"mapScreen"]]
-                                                 animated:YES];
+    MapViewController * map = [self.storyboard instantiateViewControllerWithIdentifier:@"mapScreen"];
+    map.isNavigationMode = NO;
+    
+    [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:map] animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
 
@@ -53,5 +59,15 @@
                                                  animated:YES];
     [self.sideMenuViewController hideMenuViewController];
     
+}
+
+- (IBAction)navigation:(id)sender {
+    
+    
+    MapViewController * map = [self.storyboard instantiateViewControllerWithIdentifier:@"mapScreen"];
+    map.isNavigationMode = YES;
+    
+    [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:map] animated:YES];
+    [self.sideMenuViewController hideMenuViewController];
 }
 @end

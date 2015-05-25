@@ -225,6 +225,16 @@
                                     <action selector="newsScreen_Action:" destination="Rmv-C1-YFr" eventType="touchUpInside" id="EIi-hd-onu"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="frS-vQ-Xx3">
+                                <rect key="frame" x="167" y="250" width="115" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Навигация">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="navigation:" destination="Rmv-C1-YFr" eventType="touchUpInside" id="ak5-ub-q4U"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
