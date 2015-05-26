@@ -12,8 +12,8 @@
 
 @interface RoadBusFromZhukovsky : NSObject
 
-+ (NSMutableArray *) array_Bus_25_27Avg;
-+ (NSMutableArray *) array_Bus_28_30Avg;
++ (NSMutableArray *) array_Bus_25_27Avg; //движение автобусов от остановок по г. Жуковский в период: 25-27 августа
++ (NSMutableArray *) array_Bus_28_30Avg; //движение автобусов от остановок по г. Жуковский в период: 28-30 августа
 
 
 @end

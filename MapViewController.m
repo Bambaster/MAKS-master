@@ -80,6 +80,12 @@ typedef void (^NextPointBlock) (void);
     textField.clearButtonMode = UITextFieldViewModeNever;
     [self.button_Menu_UP_Down addTarget:self action:@selector(menuActions:) forControlEvents:UIControlEventTouchUpInside];
     self.array_Additional = [PlanCoordinates arrayPlanCoordinates];
+        
+        //итого по навигации получилось 3 класса, в каждом из них по 2 маршрута:
+        //RoadByTrain - на электричке
+        //RoadBusFromZhukovsky - на автобусе в городе Жуковский
+        //RoadAuto - на автомобиле
+        
     self.array_SearchResults = self.array_Additional;
     [self annotation_Plan];
     [self.tableView setPullToRefreshHandler:^{
@@ -100,7 +106,7 @@ typedef void (^NextPointBlock) (void);
 
         self.view_PointsMenu.alpha = 0;
         isCurrentLocation = YES;
-        self.array_Additional = [RoadByTrain array_RoadTrainVacation];
+        self.array_Additional = [RoadAuto array_Novoryazan];
         self.array_SearchResults = self.array_Additional;
         [self setPointForNavigation];
         
@@ -193,6 +199,7 @@ typedef void (^NextPointBlock) (void);
 }
 
 - (UIView*) get_CalloutView: (NSString*)title { // метод, который подписывает данные над маркером
+    //пока что без особых изысков и без дизайна
     
     //создаем вью для вывода адреса:
     UIView * callView = [[UIView alloc]initWithFrame:CGRectMake(-100, -70, 200, 70)];
@@ -226,7 +233,7 @@ typedef void (^NextPointBlock) (void);
 
 - (void) annotation_Plan {
    //по координатам из массива устанавливаем аннотации
-    //позже в этот метод по ключам добавить картинки соответвтующих объектов
+   //метод срабатывает когда нет навигации
     for (int i = 0; i < self.array_SearchResults.count; i++) {
         NSDictionary * dict = [self.array_SearchResults objectAtIndex:i];
         CLLocation * newLocation = [[CLLocation alloc] init];
@@ -245,18 +252,21 @@ typedef void (^NextPointBlock) (void);
 }
 
 - (void) annotation_Navigation: (CLLocation*)newLocation Index:(NSInteger)index {
+    
+    //по координатам и индексу из массива устанавливаем аннотации
+    // метод срабатывает, когда навигация
 
         CLGeocoder * geocoder = [[CLGeocoder alloc]init];
         [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
 
-            //записываем адрес с индексом в NSString
+            //записываем аннотацию по полученному индексу из массива в NSString:
             NSString * newString = [[self.array_SearchResults objectAtIndex:index] objectForKey:@"annotation"];
             
             MKPointAnnotation * annotation = [[MKPointAnnotation alloc]init];
             annotation.title = newString;
             annotation.coordinate = newLocation.coordinate;
             
-            [self.mapView addAnnotation:annotation]; //добавляем на карту аннотацию
+            [self.mapView addAnnotation:annotation];
             
         }];
     
@@ -721,6 +731,8 @@ typedef void (^NextPointBlock) (void);
         NSDictionary * dict = [arrayPoints objectAtIndex:index];
         CLLocation * newLocation = [[CLLocation alloc] init];
         newLocation = [dict objectForKey:@"coord"];
+        
+        //по координатам и индексу показываем аннотацию на карте:
         [weakSelf annotation_Navigation:newLocation Index:index];
         
         
@@ -730,18 +742,18 @@ typedef void (^NextPointBlock) (void);
             dist1 = 500;
             dist2 = 500;
             [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
-            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:5.0];
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];
             
 
         }
         
         else {
             
-            dist1 = 6500;
-            dist2 = 6500;
+            dist1 = 10500;
+            dist2 = 10500;
             [weakSelf showPointNavigation:newLocation.coordinate Dist:dist1 Dist2:dist2];
             
-            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:5.0];            index ++;
+            [weakSelf performSelector:@selector(addPoint) withObject:nil afterDelay:2.0];            index ++;
         }
         
         

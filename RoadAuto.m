@@ -11,6 +11,7 @@
 @implementation RoadAuto
 
 + (NSMutableArray *) array_Novoryazan {
+    // по Новорязанскому шоссе (для обладателей зеленых пропусков или до аэродрома Быково с бесплатной парковкой)
     
     NSMutableArray * array = [[NSMutableArray alloc]init];
     
@@ -41,9 +42,11 @@
     
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects: coordNovoryazan, coordParkingBykovo, coordCommunicating1, coordCommunicating2, coordParking2East, coordParking6, coordParking7, nil];
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+    
     
     for (int i = 0; i < arrayCoord.count; i++) {
+        
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         [dict setObject:[arrayAnnotation objectAtIndex:i] forKey:@"annotation"];
@@ -58,6 +61,7 @@
 }
 
 + (NSMutableArray *) array_Egoryevskoe {
+    //по Егорьевскому шоссе (для обладателей желтых пропусков или до аэродрома Быково с бесплатной парковкой)
     
     NSMutableArray * array = [[NSMutableArray alloc]init];
     
@@ -85,9 +89,11 @@
     
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects: coordEgoryevskoe, coordParkingBykovo, coordCommunicating, coordParking4, coordParking3, nil];
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+    
     
     for (int i = 0; i < arrayCoord.count; i++) {
+        
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         [dict setObject:[arrayAnnotation objectAtIndex:i] forKey:@"annotation"];

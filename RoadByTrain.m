@@ -12,6 +12,7 @@
 
 
 + (NSMutableArray *) array_RoadTrainVacation {
+    //на электричке до платформы Отдых
     
     NSMutableArray * array_RoadTrain = [[NSMutableArray alloc]init];
     
@@ -56,6 +57,7 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 + (NSMutableArray *) array_RoadTrain42km {
+    //на электричке до платформы 42 км
     
     NSMutableArray * array_RoadTrain = [[NSMutableArray alloc]init];
     
@@ -78,9 +80,9 @@
     
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects: coordMoscowKazan, coordPlatform42km, coordGate3, nil];
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+    
     for (int i = 0; i < arrayCoord.count; i++) {
-        
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         [dict setObject:[arrayAnnotation objectAtIndex:i] forKey:@"annotation"];
         
@@ -103,7 +105,7 @@
  до платформы 42км:
  http://www.tutu.ru/rasp.php?st1=7402&st2=9502&date=28.08.2015
  
-т */
+ */
 
 
 

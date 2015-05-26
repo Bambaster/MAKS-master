@@ -12,8 +12,8 @@
 
 @interface RoadAuto : NSObject
 
-+ (NSMutableArray *) array_Novoryazan;
-+ (NSMutableArray *) array_Egoryevskoe;
++ (NSMutableArray *) array_Novoryazan; // по Новорязанскому шоссе (для обладателей зеленых пропусков или до аэродрома Быково с бесплатной парковкой)
++ (NSMutableArray *) array_Egoryevskoe; //по Егорьевскому шоссе (для обладателей желтых пропусков или до аэродрома Быково с бесплатной парковкой)
 
 
 @end

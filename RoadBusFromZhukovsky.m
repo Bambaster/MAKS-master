@@ -11,6 +11,7 @@
 @implementation RoadBusFromZhukovsky
 
 + (NSMutableArray *) array_Bus_25_27Avg {
+    //движение автобусов от остановок по г. Жуковский в период: 25-27 августа
     
     NSMutableArray * array_Bus = [[NSMutableArray alloc]init];
     
@@ -29,9 +30,10 @@
     
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects: coordPlatformVacation, coordKPP1, nil];
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+    
     
     for (int i = 0; i < arrayCoord.count; i++) {
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         [dict setObject:[arrayAnnotation objectAtIndex:i] forKey:@"annotation"];
@@ -48,6 +50,8 @@
 
 + (NSMutableArray *) array_Bus_28_30Avg{
     
+    //движение автобусов от остановок по г. Жуковский в период: 28-30 августа
+
     NSMutableArray * array_Bus = [[NSMutableArray alloc]init];
     
     NSString * string_Vacation = @"Платформа «Отдых. Внимание! На всех указанных маршрутах начало движения автобусов в 08:15 часов утра.»";
@@ -81,9 +85,10 @@
   
     NSArray * arrayCoord = [[NSArray alloc] initWithObjects: coordPlatformVacation, coordKPP1, coordPlatform42km, coordBykovoAirport, coordStreetLackova, coordTCOcean, nil];
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+   
     
     for (int i = 0; i < arrayCoord.count; i++) {
+         NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         
         [dict setObject:[arrayCoord objectAtIndex:i] forKey:@"coord"];
         [dict setObject:[arrayAnnotation objectAtIndex:i] forKey:@"annotation"];

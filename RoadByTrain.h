@@ -12,8 +12,8 @@
 
 @interface RoadByTrain : NSObject
 
-+ (NSMutableArray *) array_RoadTrainVacation;
-+ (NSMutableArray *) array_RoadTrain42km;
++ (NSMutableArray *) array_RoadTrainVacation; //на электричке до платформы Отдых
++ (NSMutableArray *) array_RoadTrain42km; // на электричке до платформы 42км
 
 
 @end
