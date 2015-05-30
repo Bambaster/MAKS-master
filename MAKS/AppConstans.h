@@ -37,4 +37,5 @@
 #define		MAPBOX_STYLE                       @"cribapp.5a84e59a"
 #define		MAPBOX_API_KEY                     @"pk.eyJ1IjoiY3JpYmFwcCIsImEiOiJzTkwzYS00In0.h8hG7dFEXHwGpaMu9DVnLQ"
 
+
 #endif
