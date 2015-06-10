@@ -6,7 +6,7 @@ pod "AFNetworking", "~> 2.2.1"
 pod 'MediaRSSParser', '~> 1.0'
 pod 'MBProgressHUD', '~> 0.8'
 pod 'EAIntroView', '~> 2.6.0'
-pod 'SDWebImage', '~>3.6'
+pod 'SDWebImage', '~>3.7'
 pod 'REComposeViewController', '~> 2.3.2'
 pod 'MBXMapKit'
 pod 'RESideMenu', '~> 4.0.7'

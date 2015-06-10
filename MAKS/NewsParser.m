@@ -7,6 +7,14 @@
 //
 
 #import "NewsParser.h"
+#import "APIManager.h"
+#import "Result.h"
+#import "TextCalculation.h"
+
+@interface NewsParser ()<APIManagerDelegate>
+
+
+@end
 
 @implementation NewsParser
 
@@ -16,9 +24,126 @@
 
 #pragma mark - API
 
++ (NewsParser *) newsManagerWithDelegate: (id<NewsParserDelegate>) aDelegate {
+    return [[NewsParser alloc] initWithDelegate:aDelegate];
+}
 
-- (void) api_groups_request {
+
+
+- (id)initWithDelegate:(id<NewsParserDelegate>) aDelegate
+{
+    self = [super init];
+    if (self) {
+        self.delegate = aDelegate;
+    }
+    return self;
+}
+
+
+- (void) getNewsFromWall: (NSString *) ownerID {
     
+    
+    if (![ownerID hasPrefix:@"-"]) {
+        ownerID = [@"-" stringByAppendingString:ownerID];
+    }
+    
+    NSDictionary * params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             ownerID, @"owner_id",
+                             @10, @"count",
+                             @4, @"offset" ,
+                             @"owner", @"filter", nil];
+    
+    
+    [[APIManager managerWithDelegate:self] getDataFromWall:params];
+    
+    
+}
+
+
+- (void) response: (APIManager *) manager Answer: (id) respObject {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        
+    if ([respObject isKindOfClass:[Result class]]) {
+        
+        Result * res = (id) respObject;
+        
+        NSMutableArray * arrayResult = [[NSMutableArray alloc] init];
+        
+        int photoCount = 0;
+        
+        for (int i = 1; i < [res.response count]; i++) {
+            
+            if ([[[res.response objectAtIndex:i]attachment]photo]) {
+                
+                photoCount++;
+                NSLog(@"YES");
+            }
+            else {
+                NSLog(@"NO");
+            }
+            
+        }
+        
+        
+        for (int i = 1; i < [res.response count]; i++) {
+            
+            if ([[[res.response objectAtIndex:i]attachment]photo]) {
+
+            
+            NSString * link = [[[[res.response objectAtIndex:i]attachment]photo]src_big];
+//            CGFloat height = [[[[res.response objectAtIndex:i]attachment]photo]height];
+//            CGFloat width = [[[[res.response objectAtIndex:i]attachment]photo]width];
+            
+            NSString * text = [[res.response objectAtIndex:i]text];
+            text = [text stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
+            NSURL * url = [NSURL URLWithString:link];
+
+            
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            UIImage *img = [[UIImage alloc] initWithData:data];
+            CGFloat scaleFactorDetailImage = self.view.frame.size.width/ img.size.width;
+            CGFloat targetHeightDetailImage = img.size.height * scaleFactorDetailImage;
+            CGSize targetDetailImageSize = CGSizeMake (self.view.frame.size.width, targetHeightDetailImage);
+            UIImage * resizingDetailImage = [img resizedImage:targetDetailImageSize interpolationQuality:kCGInterpolationHigh];
+            
+            
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   resizingDetailImage, DETAIL_IMAGE,
+                                   text, DETAIL_TEXT, nil];
+            
+            [arrayResult addObject:dict];
+            
+            if (arrayResult.count == photoCount) {
+                
+                [self.delegate newsParsed:self NewsArray:arrayResult];
+            }
+
+          }
+            
+        }
+        
+     }
+    
+        
+    });
+    
+}
+
+
+- (void) responseError: (APIManager *) manager Error: (NSError *) error{
+    
+    NSLog(@"error %@", error);
+}
+
+
+
+
+
+
+/*
+- (void) api_groups_request {
+ 
     NSDictionary* params =  [NSDictionary dictionaryWithObjectsAndKeys: @"military_aircraft",   @"gids", nil];
     
     [[API sharedManager]get_request:params method:Get_Groups onSuccess:^(NSDictionary *answer) {
@@ -142,6 +267,135 @@
     }];
     
 }
+
+
+
+- (void) apiFacts {
+    
+    array_images = [[NSMutableArray alloc]init];
+    
+    __block int index_photo = 0;
+    __block int index_no_photo = 0;
+    
+    NSString * your_future_ID;
+    
+    if (![Encyclopedia_Air hasPrefix:@"-"]) {
+        your_future_ID = [@"-" stringByAppendingString:Encyclopedia_Air];
+    }
+    
+    NSDictionary* params =  [NSDictionary dictionaryWithObjectsAndKeys:
+                             your_future_ID,   @"owner_id",
+                             @(10),            @"count",
+                             @(2),             @"offset",
+                             @"owner",         @"filter", nil];
+    
+    [[API sharedManager]get_request:params method:Get_Groups_Wall onSuccess:^(NSDictionary *answer) {
+        
+        //        NSLog(@"JSON api_wall_your_future answer : %@", answer);
+        NSArray * array = [ answer valueForKey:@"response"];
+        
+        [array enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+            
+            index_photo ++;
+            
+            
+            if (idx == 0 || idx ==1) {
+                
+                
+                //                index_photo ++;
+                //                index_no_photo = index_no_photo + 1;
+            }
+            
+            else
+            {
+                
+                
+                
+                NSDictionary * dict = [object valueForKey:@"attachment"];
+                
+                
+                NSString * news_text = [[object valueForKey:@"text"]stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
+                
+                
+                if ([[dict valueForKey:@"type"] isEqualToString:@"photo"]) {
+                    
+                    //                    NSLog(@"isEqualToString:photo");
+                    
+                    NSDictionary * photo = [dict valueForKey:@"photo"];
+                    NSString * link = [photo valueForKey:@"src_big"];
+                    CGFloat height = [[photo valueForKey:@"height"] intValue];
+                    CGFloat width = [[photo valueForKey:@"width"] intValue];
+                    
+                    //                    NSLog(@"link : %@", link );
+                    //                    NSURL* url = [NSURL URLWithString:link];
+                    
+                    NSMutableDictionary * dict_images = [NSMutableDictionary dictionary];
+                    
+                    
+                    [dict_images setValue:[NSString stringWithFormat:@"%f", height] forKey:@"height"];
+                    [dict_images setValue:[NSString stringWithFormat:@"%f", width] forKey:@"width"];
+                    [dict_images setValue:link forKey:@"link"];
+                    [dict_images setValue:news_text forKey:@"news_text"];
+                    
+                    [array_images addObject:dict_images];
+                    
+                    if (stop) {
+                        
+                        
+                        if (index_photo == array.count) {
+                            
+                            [self performSelector:@selector(setup_news_view) withObject:nil afterDelay:0.5];
+                            
+                            //                            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:array_images, @"array", nil];
+                            //                            [[NSNotificationCenter defaultCenter] postNotificationName:ArrayNews object:nil userInfo:dict];
+                            //
+                        }
+                        
+                    }
+                    
+                }
+                
+                
+                else {
+                    
+                    if (index_photo == array.count) {
+                        
+                        //    [self performSelector:@selector(setup_news_view) withObject:nil afterDelay:0.5];
+                        
+                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:array_images, @"array", nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:ArrayNews object:nil userInfo:dict];
+                        
+                    }
+                }
+                
+            }
+            
+        }];
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"error = %@, code = %ld", [error localizedDescription], (long)statusCode);
+        
+        
+        
+    }];
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -355,6 +609,6 @@
 {
     return [AFNetworkReachabilityManager sharedManager].reachable;
 }
-
+*/
 
 @end

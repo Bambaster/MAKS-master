@@ -12,7 +12,6 @@
 
 #import <Availability.h>
 #import "AppConstans.h"
-#import "API.h"
 #import "UIColor+HexColor.h"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
@@ -20,10 +19,15 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UIView+MotionBlur.h"
+#import "UIImage+Resize.h"
+#import "UIImage+RoundedCorner.h"
+#import "UIImage+Alpha.h"
 
 //#import "PureLayout.h"
 #import <AFNetworking/AFNetworking.h>
 //#import <CommonCrypto/CommonDigest.h>
+#import "UITextView+TextHeighCalculation.h"
 
 
 #import "UIColor+HexColor.h"
@@ -33,4 +37,9 @@
 #import "NSDictionary+DictFrom_JSON_File.h"
 #import "Animations.h"
 
+
+
 #endif
+
+
+

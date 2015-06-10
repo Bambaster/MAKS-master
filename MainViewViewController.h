@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainViewViewController : UIViewController {
+@interface MainViewViewController : UIViewController <UIScrollViewDelegate> {
     
     BOOL isZoomed;
 

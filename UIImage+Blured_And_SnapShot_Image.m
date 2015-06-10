@@ -39,7 +39,7 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    return [image applyBlurWithRadius:radius tintColor:[UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5] saturationDeltaFactor:1.5 maskImage:nil];
+    return [image applyBlurWithRadius:radius tintColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.0] saturationDeltaFactor:1.5 maskImage:nil];
 }
 
 

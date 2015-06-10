@@ -14,6 +14,7 @@
 + (void) animate_Show_Stick: (UIView *) stick;
 
 
-
+- (void) showView : (UIView *) view;
+- (void) hideView : (UIView *) view;
 
 @end

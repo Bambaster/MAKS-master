@@ -30,7 +30,7 @@
 
     NewsParser * news = [NewsParser new];
     news.view = self.view;
-    [news api_wall_your_future];
+//    [news api_wall_your_future];
     
 
     [self.tableView setPullToRefreshHandler:^{

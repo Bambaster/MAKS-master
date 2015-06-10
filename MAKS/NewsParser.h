@@ -8,16 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol NewsParserDelegate;
+
+
 @interface NewsParser : NSObject
 
 @property (strong, nonatomic) NSMutableArray * array_images;
-
+@property (nonatomic, weak) id<NewsParserDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray * array_slide_news_view;
 @property (strong, nonatomic) UIView * view;
 
+- (void) getNewsFromWall: (NSString *) ownerID;
 
-- (void) api_groups_request;
-- (void) api_wall_your_future;
++ (NewsParser *) newsManagerWithDelegate: (id<NewsParserDelegate>) aDelegate;
+- (id)initWithDelegate:(id<NewsParserDelegate>) aDelegate;
 
+
+@end
+
+
+@protocol NewsParserDelegate <NSObject>
+
+- (void) newsParsed: (NewsParser *) parser NewsArray: (NSMutableArray *) array;
 
 @end

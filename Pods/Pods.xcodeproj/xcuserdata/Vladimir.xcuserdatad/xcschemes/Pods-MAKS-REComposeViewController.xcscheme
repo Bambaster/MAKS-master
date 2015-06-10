@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C2DD154E8EFCD3A11EF8680"
+               BlueprintIdentifier = "EC5F578E0339C58C61F0575F"
                BuildableName = "libPods-MAKS-REComposeViewController.a"
                BlueprintName = "Pods-MAKS-REComposeViewController"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -46,4 +46,33 @@
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
+
+- (void) showView : (UIView *) view  {
+    
+    CATransition *transitionAnimation3 = [CATransition animation];
+    [transitionAnimation3 setType:kCATransitionFade];
+    //    [transitionAnimation3 setSubtype:kCATransitionFromLeft];
+    [transitionAnimation3 setDuration:0.4];
+    [transitionAnimation3 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [transitionAnimation3 setFillMode:kCAFillModeForwards];
+    
+    [view.layer addAnimation:transitionAnimation3 forKey:@"FromRightAnimation"];
+    view.alpha = 1;
+}
+
+
+
+
+- (void) hideView : (UIView *) view  {
+    
+    CATransition *transitionAnimation3 = [CATransition animation];
+    [transitionAnimation3 setType:kCATransitionFade];
+    [transitionAnimation3 setDuration:0.4];
+    [transitionAnimation3 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [transitionAnimation3 setFillMode:kCAFillModeForwards];
+    
+    [view.layer addAnimation:transitionAnimation3 forKey:@"FromRightAnimation"];
+    view.alpha = 0;
+}
+
 @end
