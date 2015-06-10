@@ -9,12 +9,17 @@
 #import "MJRootViewController.h"
 #import "MJCollectionViewCell.h"
 #import "NewsParser.h"
+#import "ATCTransitioningDelegate.h"
+#import "ConstruktorForDetailView.h"
+#import "DetailNewsViewController.h"
+
 
 @interface MJRootViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, NewsParserDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *parallaxCollectionView;
 @property (nonatomic, strong) NSMutableArray* images;
 @property (nonatomic, strong) NewsParser* news;
+@property (nonatomic, strong) ATCTransitioningDelegate *atcTransitioningDelegate;
 
 
 @end
@@ -82,6 +87,34 @@
 
     return cell;
 }
+
+#pragma mark - UICollectionViewDelegate
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    self.atcTransitioningDelegate = [[ATCTransitioningDelegate alloc] initWithPresentationTransition:ATCTransitionAnimationTypeBounce
+                                                                                 dismissalTransition:ATCTransitionAnimationTypeBounce
+                                                                                           direction:ATCTransitionAnimationDirectionBottom
+                                                                                            duration:0.7];
+    
+    
+    DetailNewsViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailNews"];
+    UIImage * image = [[self.images objectAtIndex:indexPath.row] valueForKey:DETAIL_IMAGE];
+    NSString * textNews = [[self.images objectAtIndex:indexPath.row] valueForKey:DETAIL_TEXT];
+    
+    controller.modalPresentationStyle = UIModalPresentationCustom;
+    controller.transitioningDelegate = self.atcTransitioningDelegate;
+    UIView * newsView = [ConstruktorForDetailView getViewDetailNews:image Text:textNews];
+    
+    controller.viewN = newsView;
+    
+    
+    [self presentViewController:controller animated:YES completion:nil];
+    
+    
+}
+
 
 #pragma mark - UIScrollViewdelegate methods
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

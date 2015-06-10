@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ConstruktorForDetailView : NSObject
-
++ (UIView *) getViewDetailNews: (UIImage *) image Text:(NSString *) text;
 @end
